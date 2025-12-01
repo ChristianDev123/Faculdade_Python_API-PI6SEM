@@ -35,7 +35,7 @@ async def get_all_prices(
     start_date:Optional[str] = None,
     end_date:Optional[str] = None
 ):
-    return game_controller.get_game(
+    return await game_controller.get_game(
         game_id,
         shop_ids, 
         start_date,
@@ -48,7 +48,7 @@ async def get_all_prices(
    tags=['Games']
 )
 async def get_games_list():
-    return game_controller.get_game_ids()
+    return await game_controller.get_game_ids()
 
 @app.get(
     "/economic-indicators",
@@ -61,7 +61,7 @@ async def get_economic_indicators(
     end_year:Optional[str] = None,
     start_year:Optional[str] = 2021
 ):
-    return financial_controller.get_indicators(
+    return await financial_controller.get_indicators(
         indicators=indicators,
         countries=countries,
         end_year=end_year,
@@ -74,7 +74,7 @@ async def get_economic_indicators(
     tags=["Economic Indicators"]
 )
 async def get_indicators_list():
-    return financial_controller.get_indicators_ids()
+    return await financial_controller.get_indicators_ids()
 
 @app.get(
     "/countries_list",
@@ -82,7 +82,7 @@ async def get_indicators_list():
     tags=["Economic Indicators"]
 )
 async def get_countries_list():
-    return financial_controller.get_countries_id()
+    return await financial_controller.get_countries_id()
 
 if __name__ == "__main__":
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
