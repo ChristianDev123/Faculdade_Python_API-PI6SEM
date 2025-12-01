@@ -96,15 +96,12 @@ class FinancialController(Controller):
                 "total_records": len(pivot_df),
                 "generated_at": datetime.now().isoformat(),
             },
-            "data": {},
+            "data": [],
         }
 
         for country in pivot_df["country"].unique():
             country_data = pivot_df[pivot_df["country"] == country].copy()
             country_data = country_data.sort_values("year")
-
-            result["data"][country] = []
-
             for _, row in country_data.iterrows():
                 year_data = {
                     "period": int(row["year"]),
@@ -113,10 +110,10 @@ class FinancialController(Controller):
                 }
 
                 for col in country_data.columns:
-                    if col not in ["country", "year"] and pd.notna(row[col]):
-                        year_data["indicators"][col] = float(row[col])
+                    if col != "year" and pd.notna(row[col]):
+                        year_data["indicators"][col] = float(row[col]) if col != 'country' else row[col]
 
-                result["data"][country].append(year_data)
+                result["data"].append(year_data)
 
         return result
 
