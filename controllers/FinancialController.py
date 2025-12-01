@@ -19,11 +19,12 @@ class FinancialController(Controller):
         """
         Executa imfp e pandas em thread separada para não travar o loop async.
         """
+
         df = await asyncio.to_thread(
             imfp.imf_dataset,
             "WEO",
-            indicators,
-            countries
+            indicator=indicators,
+            country=countries
         )
 
         if df is not None and not df.empty:
@@ -120,7 +121,6 @@ class FinancialController(Controller):
         return result
 
     async def get_indicators(self, countries=None, indicators=None, end_year=None, start_year=None):
-        countries = ",".join(countries) if countries else ""
         indicators = indicators if indicators else list(self.indicators_info.keys())
 
         financial_data = await self.get_data(
