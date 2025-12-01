@@ -106,12 +106,12 @@ class FinancialController(Controller):
                 year_data = {
                     "period": int(row["year"]),
                     "period_type": "year",
-                    "indicators": {},
+                    'country': row['country'],
+                    "indicators": [{
+                        'code': col, 
+                        'value': row[col]
+                    } for col in country_data.columns if col not in ['year','country'] and pd.notna(row[col])],
                 }
-
-                for col in country_data.columns:
-                    if col != "year" and pd.notna(row[col]):
-                        year_data["indicators"][col] = float(row[col]) if col != 'country' else row[col]
 
                 result["data"].append(year_data)
 
