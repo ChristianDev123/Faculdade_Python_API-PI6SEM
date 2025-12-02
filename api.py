@@ -59,7 +59,7 @@ async def get_economic_indicators(
     countries:Optional[list[str]] = Query(None),
     indicators:list[str] = Query(None),
     end_year:Optional[str] = None,
-    start_year:Optional[str] = 2021
+    start_year:Optional[str] = '2021'
 ):
     return await financial_controller.get_indicators(
         indicators=indicators,

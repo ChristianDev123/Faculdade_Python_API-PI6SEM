@@ -35,9 +35,9 @@ class GameController(Controller):
 
         if start_date:
             start_date_iso = datetime.strptime(start_date, "%Y-%m-%d").isoformat() + "Z"
-            params["since"] = start_date_iso
         else:
-            start_date_iso = None
+            start_date_iso = datetime(2015,1,1).isoformat() + "Z"
+        params["since"] = start_date_iso
 
         if shop_ids:
             params["shops"] = ",".join(shop_ids)

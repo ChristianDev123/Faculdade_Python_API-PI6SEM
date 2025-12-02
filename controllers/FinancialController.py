@@ -8,10 +8,10 @@ import asyncio
 class FinancialController(Controller):
     def __init__(self):
         self.indicators_info = {
-            "PCPIPCH": "taxa de inflação, média de preços consumidores (percentual anual)",
-            "NGDPDPC": "PIB per capita, preços atuais (dólares americanos)",
-            "PPPPC": "PIB per capita, PPP (dólares internacionais atuais)",
-            "NGDP_RPCH": "PIB, preços constantes (percentual anual)",
+            "PCPIPCH": "taxa de inflação (percentual anual)",
+            "NGDPDPC": "PIB per capita (dólares americanos)",
+            "PPPPC": "PIB per capita (dólares internacionais atuais)",
+            "NGDP_RPCH": "PIB (percentual anual)",
             "LUR": "taxa de desemprego (percentual do total da força de trabalho)",
         }
 
@@ -119,7 +119,7 @@ class FinancialController(Controller):
 
     async def get_indicators(self, countries=None, indicators=None, end_year=None, start_year=None):
         indicators = indicators if indicators else list(self.indicators_info.keys())
-
+        if(not start_year): start_year = '2021'
         financial_data = await self.get_data(
             countries=countries,
             indicators=indicators,
